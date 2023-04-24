@@ -1,0 +1,5 @@
+# env vars file
+.env
+
+# generated html newsletter content
+newsletter.html
