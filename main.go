@@ -2,16 +2,14 @@ package main
 
 import (
 	_ "embed"
-	"opensourcegeeks-newsletter/listmonk"
-	"opensourcegeeks-newsletter/loadenv"
-	"opensourcegeeks-newsletter/rss"
+	newsletter "opensourcegeeks-newsletter/internal"
 )
 
 func main() {
 
-	loadenv.LoadEnv()
-	rss.Rss()
-	listmonk.Listmonk()
+	newsletter.LoadEnv()
+	newsletter.RSS()
+	newsletter.Listmonk()
 
 	// fmt.Println(os.Getenv("TEST"))
 

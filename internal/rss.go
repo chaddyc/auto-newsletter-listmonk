@@ -1,4 +1,4 @@
-package rss
+package newsletter
 
 import (
 	"log"
@@ -7,9 +7,11 @@ import (
 	"github.com/mmcdole/gofeed"
 )
 
-func Rss() {
+func RSS() {
+	var rss = os.Getenv("RSS_FEED")
+
 	fp := gofeed.NewParser()
-	feed, _ := fp.ParseURL("https://opensourcegeeks.net/rss/")
+	feed, _ := fp.ParseURL(rss)
 
 	f, err := os.Create("./newsletter.html")
 	if err != nil {

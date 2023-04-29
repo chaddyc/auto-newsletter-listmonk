@@ -1,4 +1,4 @@
-package listmonk
+package newsletter
 
 import (
 	"bytes"
@@ -20,8 +20,10 @@ func Listmonk() {
 	fc, _ := fs.ReadFile(os.DirFS("."), "newsletter.html")
 	newsletterName := "newsletter-" + time.Now().Format("01-02-2006")
 
+	var rss = os.Getenv("RSS_FEED")
+
 	fp := gofeed.NewParser()
-	feed, _ := fp.ParseURL("https://opensourcegeeks.net/rss/")
+	feed, _ := fp.ParseURL(rss)
 	newsletterSubject := feed.Items[0].Title
 
 	type Payload struct {
@@ -53,7 +55,9 @@ func Listmonk() {
 	}
 	body := bytes.NewReader(payloadBytes)
 
-	req, err := http.NewRequest("POST", "https://newsletter.opensourcegeeks.net/api/campaigns", body)
+	var api = os.Getenv("LISTMONK_API")
+
+	req, err := http.NewRequest("POST", api, body)
 	if err != nil {
 		log.Fatalf("Error occured. Err: %s", err)
 	}

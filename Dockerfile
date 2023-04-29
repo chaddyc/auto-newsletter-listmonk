@@ -11,10 +11,7 @@ RUN mkdir rss
 RUN mkdir loadenv
 
 COPY main.go ./
-COPY listmonk/listmonk.go ./listmonk/
-COPY rss/rss.go ./rss/
-COPY loadenv/loadenv.go ./loadenv/
-COPY .env ./
+COPY listmonk/* ./
 
 RUN go build -o /opensourcegeeks-newsletter
 
