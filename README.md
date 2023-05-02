@@ -3,7 +3,7 @@ Autonomous newsletter builder tool for Listmonk. This GoLang App compiles a news
 
 ### How To Run This Software
 
-Docker run
+Docker CLI
 
 Docker Compose
 
