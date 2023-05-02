@@ -74,5 +74,4 @@ func Listmonk() {
 	}
 	defer resp.Body.Close()
 
-	// fmt.Println(os.Getenv("TEST"))
 }
