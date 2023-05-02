@@ -15,12 +15,19 @@ import (
 
 func Listmonk() {
 
+	// env vars
+	var api = os.Getenv("LISTMONK_API")
+	var username = os.Getenv("USER")
+	var password = os.Getenv("PASSWORD")
+	var rss = os.Getenv("RSS_FEED")
+	var email = os.Getenv("FROM_EMAIL")
+	var template = os.Getenv("TEMPLATE_ID")
+	var list = os.Getenv("LISTS")
+
 	time.Sleep(30 * time.Second)
 
 	fc, _ := fs.ReadFile(os.DirFS("."), "newsletter.html")
 	newsletterName := "newsletter-" + time.Now().Format("01-02-2006")
-
-	var rss = os.Getenv("RSS_FEED")
 
 	fp := gofeed.NewParser()
 	feed, _ := fp.ParseURL(rss)
@@ -41,13 +48,13 @@ func Listmonk() {
 	data := Payload{
 		Name:        newsletterName,
 		Subject:     newsletterSubject,
-		Lists:       []int{3},
-		FromEmail:   "Chad at Opensource Geeks <chad@opensourcegeeks.net>",
+		Lists:       []int{list},
+		FromEmail:   email,
 		ContentType: "html",
 		Body:        string(fc),
 		Messenger:   "email",
 		Type:        "regular",
-		TemplateID:  3,
+		TemplateID:  template,
 	}
 	payloadBytes, err := json.Marshal(data)
 	if err != nil {
@@ -55,15 +62,10 @@ func Listmonk() {
 	}
 	body := bytes.NewReader(payloadBytes)
 
-	var api = os.Getenv("LISTMONK_API")
-
 	req, err := http.NewRequest("POST", api, body)
 	if err != nil {
 		log.Fatalf("Error occured. Err: %s", err)
 	}
-
-	var username = os.Getenv("USER")
-	var password = os.Getenv("PASSWORD")
 
 	req.SetBasicAuth(username, password)
 	req.Header.Set("Content-Type", "application/json;charset=utf-8")
