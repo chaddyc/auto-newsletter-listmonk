@@ -7,7 +7,7 @@ import (
 
 func main() {
 
-	newsletter.LoadEnv()
+	// newsletter.LoadEnv()
 	newsletter.RSS()
 	newsletter.Listmonk()
 

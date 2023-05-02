@@ -6,12 +6,11 @@ COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
 
-RUN mkdir listmonk
-RUN mkdir rss
-RUN mkdir loadenv
+RUN mkdir internal
+
 
 COPY main.go ./
-COPY listmonk/* ./
+COPY internal/* ./internal/
 
 RUN go build -o /opensourcegeeks-newsletter
 
