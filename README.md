@@ -10,3 +10,22 @@ Docker Compose
 Ansible
 
 Github Actions
+
+### Example Env Vars
+
+```
+# Listmonk Env Vars
+
+LISTMONK_API=
+USER=
+PASSWORD=
+FROM_EMAIL=
+TEMPLATE_ID=
+LISTS=
+
+# RSS Feed Env Vars
+
+RSS_FEED=
+HEADER_MESSAGE=
+FOOTER_MESSAGE=
+```
