@@ -22,10 +22,10 @@ func Listmonk() {
 	var password = os.Getenv("PASSWORD")
 	var rss = os.Getenv("RSS_FEED")
 	var email = os.Getenv("FROM_EMAIL")
-	var templ = os.Getenv("TEMPLATE_ID")
-	t, err := strconv.Atoi(templ)
-	// template := strconv.Itoa(t)
-	// var list = os.Getenv("LISTS")
+	var t = os.Getenv("TEMPLATE_ID")
+	template, err := strconv.Atoi(t)
+	var l = os.Getenv("LISTS")
+	list, err := strconv.Atoi(l)
 
 	time.Sleep(30 * time.Second)
 
@@ -51,13 +51,13 @@ func Listmonk() {
 	data := Payload{
 		Name:        newsletterName,
 		Subject:     newsletterSubject,
-		Lists:       []int{3},
+		Lists:       []int{list},
 		FromEmail:   email,
 		ContentType: "html",
 		Body:        string(fc),
 		Messenger:   "email",
 		Type:        "regular",
-		TemplateID:  t,
+		TemplateID:  template,
 	}
 	payloadBytes, err := json.Marshal(data)
 	if err != nil {
