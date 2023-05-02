@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/mmcdole/gofeed"
@@ -21,8 +22,10 @@ func Listmonk() {
 	var password = os.Getenv("PASSWORD")
 	var rss = os.Getenv("RSS_FEED")
 	var email = os.Getenv("FROM_EMAIL")
-	var template = os.Getenv("TEMPLATE_ID")
-	var list = os.Getenv("LISTS")
+	var templ = os.Getenv("TEMPLATE_ID")
+	t, err := strconv.Atoi(templ)
+	// template := strconv.Itoa(t)
+	// var list = os.Getenv("LISTS")
 
 	time.Sleep(30 * time.Second)
 
@@ -48,13 +51,13 @@ func Listmonk() {
 	data := Payload{
 		Name:        newsletterName,
 		Subject:     newsletterSubject,
-		Lists:       []int{list},
+		Lists:       []int{3},
 		FromEmail:   email,
 		ContentType: "html",
 		Body:        string(fc),
 		Messenger:   "email",
 		Type:        "regular",
-		TemplateID:  template,
+		TemplateID:  t,
 	}
 	payloadBytes, err := json.Marshal(data)
 	if err != nil {
