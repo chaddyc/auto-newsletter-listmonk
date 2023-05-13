@@ -12,6 +12,6 @@ RUN mkdir internal
 COPY main.go ./
 COPY internal/* ./internal/
 
-RUN go build -o /opensourcegeeks-newsletter
+RUN go build -o /auto-newsletter
 
-CMD [ "/opensourcegeeks-newsletter" ]
+CMD [ "/auto-newsletter" ]
