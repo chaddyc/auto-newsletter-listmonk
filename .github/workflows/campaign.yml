@@ -3,8 +3,6 @@ name: Create Listmonk Campaign
 on:
   workflow_dispatch
 
-env
-
 jobs:
   build-app:
     runs-on: ubuntu-latest
