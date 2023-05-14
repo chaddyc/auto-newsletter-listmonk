@@ -1,4 +1,4 @@
-Newsletter builder/compiler software for Ghost Blog CMS and Listmonk Newsletter Manager. This [Blog Article](https://opensourcegeeks.net/how-i-built-an-autonomous-newsletter-compiler-tool-with-golang-github-actions-and-listmonk/) displays steps how this software was developed and examples of how it works.
+Newsletter builder/compiler software for Ghost Blog CMS and Listmonk Newsletter Manager. This [Blog Article](https://opensourcegeeks.net/how-i-built-an-autonomous-newsletter-compiler-tool-with-golang-github-actions-and-listmonk/) display the steps how this software was developed and examples of how it works.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ This is a newsletter builder tool for [Ghost CMS](https://opensourcegeeks.net/ho
 
 This software tool can be utilized via the `Docker CLI`, `GitHub Actions` or by creating an `Ansible Playbook`.
 
-### Docker CLI
+### Docker CLI:
 
 Create a folder and call it `auto-listmonk-newsletter` and cd to the directory. Create a `.env` file and add the following vars in the `.env`, add your values and save it:
 
@@ -45,13 +45,32 @@ docker run --rm --name auto-listmonk --env-file .env chaddyc/auto-listmonk-newsl
 
 To automate this process you can set up a `cron` job or you can build an ansible playbook like in the next method.
 
-### Ansible
+### Ansible:
 
 In progress...
 
-### Github Actions
+### Github Actions:
 
-The first step is to create a [GitHub Secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets) in the repository that you are going to utilize to run a workflow for this tool. Call the secret `ENV_FILE` and add the following workflow below under `.github/workflows/campaign.yml`.
+The first step is to create a [GitHub Secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets) in the repository that you are going to utilize to run a workflow for this tool. Call the secret `ENV_FILE` and add your env vars values and save the secret. Add the following workflow below under `.github/workflows/campaign.yml`.
+
+`ENV_FILE` secret template to be added under Github Actions secrets for your repository.
+
+```
+# Listmonk Env Vars
+
+LISTMONK_API=
+USER=
+PASSWORD=
+FROM_EMAIL=
+TEMPLATE_ID=
+LISTS=
+
+# RSS Feed Env Vars
+
+RSS_FEED=
+HEADER_MESSAGE=
+FOOTER_MESSAGE=
+```
 
 This workflow should be executed manually in the `Github Actions` tab whenever you want to compile your latest 5 articles links into a newsletter campaign for Listmonk.
 
