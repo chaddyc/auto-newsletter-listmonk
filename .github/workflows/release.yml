@@ -115,3 +115,11 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: chaddyc/auto-listmonk-newsletter:latest
+
+      - name: Build and push new version
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: chaddyc/auto-listmonk-newsletter:${{ needs.create-release.outputs.version }}
