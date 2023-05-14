@@ -1,0 +1,96 @@
+name: Release Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'version bump type, major or minor or patch'
+        default: 'patch'
+        required: true
+
+jobs:
+  build-go:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && contains('["chaddyc"]', github.actor) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Test & Build Go App
+        uses: ./.github/actions/build
+
+  create-release:
+    needs: [build-go]
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && contains('["chaddyc"]', github.actor) }}
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.step1.outputs.hash }}
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      REPO: ${{ github.event.repository.name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create release
+        id: step1
+        run: |
+          export VERSION=$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/chaddyc/${{ github.event.repository.name }}/releases/latest)
+
+          pip install versionbump
+
+          export ERROR_NF=$(echo $VERSION | jq -r '.message')
+          export STR='Not Found'
+
+          if [[ $ERROR_NF == $STR ]] ;
+          then
+            echo "There are no releases for this repository... setting version to 0.0.0 ..."
+            export NEW_VERSION=v$(versionbump -c 0.0.0 ${{ github.event.inputs.bump }})
+            gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/chaddyc/${{ github.event.repository.name }}/releases \
+            -f tag_name=$NEW_VERSION \
+            -F generate_release_notes=true
+
+            export VERSION=$(gh api \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              /repos/chaddyc/${{ github.event.repository.name }}/releases/latest)
+
+            echo "hash=$(echo $VERSION | jq -r '.tag_name')" >> $GITHUB_OUTPUT
+          else
+            echo "Initializing and creating a new version..."
+            export NEW_VERSION=v$(versionbump -c $(echo $VERSION | jq -r '.tag_name' | sed 's/v//') ${{ github.event.inputs.bump }})
+            gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/chaddyc/${{ github.event.repository.name }}/releases \
+            -f tag_name=$NEW_VERSION \
+            -F generate_release_notes=true
+
+            export VERSION=$(gh api \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              /repos/chaddyc/${{ github.event.repository.name }}/releases/latest)
+
+            echo "hash=$(echo $VERSION | jq -r '.tag_name')" >> $GITHUB_OUTPUT
+          fi
+
+  # docker-build:
+  #   needs: [build-go, create-release]
+  #   if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && contains('["chaddyc"]', github.actor) }}
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     version: ${{ steps.step1.outputs.hash }}
+  #   env:
+  #     GITHUB_TOKEN: ${{ github.token }}
+  #     REPO: ${{ github.event.repository.name }}
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
