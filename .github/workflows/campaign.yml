@@ -4,11 +4,14 @@ on:
   workflow_dispatch
 
 jobs:
-  build-app:
+  campaign:
     runs-on: ubuntu-latest
     steps:
     - name: Create .env
       run: echo $(${{ secrets.ENV_FILE }}) >> .env
 
-    - name: Docker run
-      run: docker run --rm --name auto-listmonk --env-file .env chaddyc/auto-listmonk-newsletter:latest
+    - name: View .env
+      run: cat .env
+
+    # - name: Docker run
+    #   run: docker run --rm --name auto-listmonk --env-file .env chaddyc/auto-listmonk-newsletter:latest
