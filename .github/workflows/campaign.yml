@@ -10,8 +10,8 @@ jobs:
     - name: Create .env
       run: echo "${{ secrets.ENV_FILE }}" > .env
 
-    - name: View .env
-      run: cat .env
+    # - name: View .env
+    #   run: cat .env
 
-    # - name: Docker run
-    #   run: docker run --rm --name auto-listmonk --env-file .env chaddyc/auto-listmonk-newsletter:latest
+    - name: Docker run
+      run: docker run --rm --name auto-listmonk --env-file .env chaddyc/auto-listmonk-newsletter:latest
