@@ -114,6 +114,18 @@ jobs:
 
 ## Contributors
 
+<table>
+<tr>
+    <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
+        <a href=https://github.com/chaddyc>
+            <img src=https://avatars.githubusercontent.com/u/34277139?v=4 width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Chad Crouch/>
+            <br />
+            <sub style="font-size:14px"><b>Chad Crouch</b></sub>
+        </a>
+    </td>
+</tr>
+</table>
+
 ## How To Contribute
 
 Contact me via [Twitter](https://twitter.com/fossgeek)
