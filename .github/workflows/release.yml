@@ -111,7 +111,7 @@ jobs:
       - name: Build and push latest
         uses: docker/build-push-action@v4
         with:
-          context .
+          context: .
           platforms: linux/amd64,linux/arm64
           push: true
           tags: chaddyc/auto-listmonk-newsletter:latest
