@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Create .env
-      run: echo $(${{ secrets.ENV_FILE }}) >> .env
+      run: echo $(${{ secrets.ENV_FILE }}) > .env
 
     - name: View .env
       run: cat .env
