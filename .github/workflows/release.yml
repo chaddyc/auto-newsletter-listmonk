@@ -123,3 +123,10 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: chaddyc/auto-listmonk-newsletter:${{ needs.create-release.outputs.version }}
+
+      - name: Update repo description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: chaddyc/auto-listmonk-newsletter
