@@ -132,4 +132,4 @@ Contact me via [Twitter](https://twitter.com/fossgeek)
 
 ## License
 
-For license information, please see [LICENSE](./LICENSE)
+For license information, please see [LICENSE](https://github.com/chaddyc/auto-newsletter-listmonk/blob/main/LICENSE)
