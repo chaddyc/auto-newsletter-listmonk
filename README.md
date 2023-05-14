@@ -1,4 +1,4 @@
-Newsletter builder/compiler software for Ghost Blog CMS and Listmonk Newsletter Manager.
+Newsletter builder/compiler software for Ghost Blog CMS and Listmonk Newsletter Manager. This [Blog Article](https://opensourcegeeks.net/how-i-built-an-autonomous-newsletter-compiler-tool-with-golang-github-actions-and-listmonk/) displays steps how this software was developed and examples of how it works.
 
 ## Table of Contents
 
@@ -47,7 +47,53 @@ To automate this process you can set up a `cron` job or you can build an ansible
 
 ### Ansible
 
+In progress...
+
 ### Github Actions
+
+The first step is to create a [GitHub Secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets) in the repository that you are going to utilize to run a workflow for this tool. Call the secret `ENV_FILE` and add the following workflow below under `.github/workflows/campaign.yml`.
+
+This workflow should be executed manually in the `Github Actions` tab whenever you want to compile your latest 5 articles links into a newsletter campaign for Listmonk.
+
+```
+name: Create Listmonk Campaign
+
+on:
+  workflow_dispatch
+
+jobs:
+  campaign:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create .env
+      run: echo "${{ secrets.ENV_FILE }}" > .env
+
+    - name: Docker run
+      run: docker run --rm --name auto-listmonk --env-file .env chaddyc/auto-listmonk-newsletter:latest
+```
+
+This workflow below will execute every Sunday and create a campaign in Listmonk with the latest 5 articles.
+
+```
+name: Create Listmonk Campaign
+
+on:
+  schedule:
+    # Runs every Sunday at 18:30
+    - cron: '5 19 * * Sun'
+
+jobs:
+  campaign:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create .env
+      run: echo "${{ secrets.ENV_FILE }}" > .env
+
+    - name: Docker run
+      run: docker run --rm --name auto-listmonk --env-file .env chaddyc/auto-listmonk-newsletter:latest
+```
+
+
 
 ## Contributors
 
