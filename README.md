@@ -53,7 +53,7 @@ In progress...
 
 The first step is to create a [GitHub Secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets) in the repository that you are going to utilize to run a workflow for this tool. Call the secret `ENV_FILE` and add your env vars values and save the secret. Add the following workflow below under `.github/workflows/campaign.yml`.
 
-`ENV_FILE` secret template to be added under Github Actions secrets for your repository.
+`ENV_FILE` secret template to be added under Github Actions secrets for your repository.(See `sample.env`)
 
 ```
 # Listmonk Env Vars
@@ -111,8 +111,6 @@ jobs:
     - name: Docker run
       run: docker run --rm --name auto-listmonk --env-file .env chaddyc/auto-listmonk-newsletter:latest
 ```
-
-
 
 ## Contributors
 
