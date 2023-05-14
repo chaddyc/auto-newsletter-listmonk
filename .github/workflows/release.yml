@@ -133,6 +133,8 @@ jobs:
   
   contributors-readme:
     runs-on: ubuntu-latest
+    needs: [build-go, create-release, docker-build]
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && contains('["chaddyc"]', github.actor) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
