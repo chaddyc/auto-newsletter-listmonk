@@ -1,0 +1,16 @@
+name: Create Listmonk Campaign
+
+on:
+  workflow_dispatch
+
+env
+
+jobs:
+  build-app:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create .env
+      run: echo ${{ secrets.ENV_FILE }} >> .env
+
+    - name: Docker run
+      run: docker run --rm --name auto-listmonk --env-file .env chaddyc/auto-listmonk-newsletter:latest

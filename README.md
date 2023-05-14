@@ -34,4 +34,4 @@ FOOTER_MESSAGE=
 
 
 
-docker run --rm --name auto-listmonk --env-file .env auto-listmonk:latest
+docker run --rm --name auto-listmonk --env-file .env chaddyc/auto-listmonk-newsletter:latest
