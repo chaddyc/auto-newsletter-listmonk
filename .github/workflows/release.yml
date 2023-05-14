@@ -28,6 +28,8 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ github.token }}
       REPO: ${{ github.event.repository.name }}
+    permissions:
+      issues: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
